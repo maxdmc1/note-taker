@@ -108,9 +108,10 @@ var renderNoteList = function(notes) {
   $noteList.empty();
 
   var noteListItems = [];
-
-  for (var i = 0; i < notes.length; i++) {
-    var note = notes[i];
+  console.log(notes, notes.length);
+    const jsonNotes = JSON.parse(notes);
+  for (var i = 0; i < jsonNotes.length; i++) {
+    var note = jsonNotes[i];
 
     var $li = $("<li class='list-group-item'>").data(note);
     var $span = $("<span>").text(note.title);
