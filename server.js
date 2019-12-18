@@ -44,18 +44,19 @@ app.get("/api/notes/", function (req, res) {
 });
 // Paths need to be written for creating a new note
 app.post("/api/notes", function (req, res) {
-    let Notes = []
-    let id = 1
-    console.log(req.body, "This is the most recent Note");
+    let Notes = [];
+    // let id = 1
+    // console.log(req.body, "This is the most recent Note");
     fs.readFile("./db/db.json", "utf8", function (err, res) {
         if (err) {
             console.log(err);
             throw err;
         }
-        Notes = JSON.parse(res);
+        let Notes = JSON.parse(res);
         // console.log(Notes);
 
         Notes.push(req.body);
+
         for (let i = 0; i < Notes.length; i++) {
             Notes[i].id = i + 1
         }
@@ -63,7 +64,7 @@ app.post("/api/notes", function (req, res) {
 
         fs.writeFile("db/db.json", JSON.stringify(Notes), err => {
             if (err) throw err;
-            console.log(Notes, "HI");
+            // console.log(Notes, "HI");
             return Notes;
         }
         );
@@ -72,6 +73,38 @@ app.post("/api/notes", function (req, res) {
 });
 
 // Paths need to be written for deleting a note based on noteId
+
+// this is throwing a 404 in the chrome console logs, but no logs in the server terminal.  Hmmmm
+app.delete("/api/notes:id", function (req, res) {
+    const deleteNoteId = req.params.id;
+    console.log(deleteNoteId);
+    console.log("HI");
+    console.log(req.params.id);
+    // none of the console logs are triggering here - it seems to be that the app.delete statement is faulty
+
+    fs.readFile("./db/db.json", "utf8", function (err, res) {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+        let Notes = JSON.parse(res);
+        console.log(Notes, "delete");
+        for (let i = 0; i < Notes.length; i++) {
+            if (Notes[i] = req.params.id) {
+               res.json(Notes.splice(i, 1));
+            };
+        };
+        // console.log(Notes);
+
+        fs.writeFile("db/db.json", JSON.stringify(Notes), err => {
+            if (err) throw err;
+            // console.log(Notes, "HI");
+            return Notes;
+        }
+        );
+    });
+    res.send(Notes)
+});
 
 
 
