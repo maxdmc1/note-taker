@@ -73,7 +73,7 @@ app.post("/api/notes", function (req, res) {
 });
 
 // Paths need to be written for deleting a note based on noteId
-
+// adding a line to do another push so heroku updates
 // this is throwing a 404 in the chrome console logs, but no logs in the server terminal.  Hmmmm
 app.delete("/api/notes:id", function (req, res) {
     const deleteNoteId = req.params.id;
